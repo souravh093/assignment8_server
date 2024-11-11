@@ -21,14 +21,14 @@ app.use(express_1.default.json());
 app.use(express_1.default.static("public"));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
+app.get("/", (req, res) => {
+    res.json({
+        message: "BOOKKI Server running 😎",
+    });
+});
 // global route
 app.use("/api", routes_1.default);
 // error handle
 app.use(notFoundRoutes_1.default);
 app.use(globalErrorHandler_1.globalErrorHandler);
-app.get("/", (req, res) => {
-    res.json({
-        message: "Library Server running 😎",
-    });
-});
 exports.default = app;

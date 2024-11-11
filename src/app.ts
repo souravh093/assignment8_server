@@ -20,17 +20,17 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.get("/", (req: Request, res: Response) => {
+  res.json({
+    message: "BOOKKI Server running 😎",
+  });
+});
+
 // global route
 app.use("/api", router);
 
 // error handle
 app.use(notFoundRoute);
 app.use(globalErrorHandler);
-
-app.get("/", (req: Request, res: Response) => {
-  res.json({
-    message: "Library Server running 😎",
-  });
-});
 
 export default app;

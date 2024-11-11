@@ -16,7 +16,7 @@ const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./config"));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const server = app_1.default.listen(config_1.default.port, () => {
+        app_1.default.listen(config_1.default.port, () => {
             console.log(`BOOKKI LISTENING ON PORT ${config_1.default.port} 👌`);
         });
     });
