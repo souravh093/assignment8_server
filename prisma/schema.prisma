@@ -8,44 +8,35 @@ datasource db {
 }
 
 model Book {
-  bookId          String         @id @default(uuid())
+  bookId          String        @id @default(uuid())
   title           String
   genre           String
   publishedYear   Int
   totalCopies     Int
   availableCopies Int
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  borrowRecord    BorrowRecord[]
-}
-
-model Author {
-  authorId    String   @id @default(uuid())
-  name        String
-  bio         String   @db.Text
-  dateOfBirth DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  borrowRecord    BorrowRecord?
 }
 
 model Member {
-  memberId       String         @id @default(uuid())
+  memberId       String        @id @default(uuid())
   name           String
-  email          String         @unique
+  email          String        @unique
   phone          String
   membershipDate DateTime
-  borrowRecord   BorrowRecord[]
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  borrowRecord   BorrowRecord?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 }
 
 model BorrowRecord {
   borrowId   String    @id @default(uuid())
   borrowDate DateTime  @default(now())
   returnDate DateTime?
-  bookId     String
+  bookId     String    @unique
   book       Book      @relation(fields: [bookId], references: [bookId], onDelete: Cascade)
-  memberId   String
+  memberId   String    @unique
   member     Member    @relation(fields: [memberId], references: [memberId], onDelete: Cascade)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
