@@ -22,7 +22,7 @@ const borrowOverdueBook = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     status: 200,
-    message: "Overdue borrow list fetched.",
+    message: result.length > 0 ? "Overdue borrow list fetched." : "No overdue books.",
     data: result,
   });
 });
