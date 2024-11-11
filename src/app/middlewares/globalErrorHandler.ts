@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {  NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 import handleZodError from "../errors/handleZodError";
 import AppError from "../errors/AppError";
@@ -59,8 +59,7 @@ export const globalErrorHandler = (
 
   return res.status(statusCode).json({
     success: false,
+    status: statusCode,
     message,
-    errorSources,
-    stack: error?.stack ? error?.stack : null,
   });
 };

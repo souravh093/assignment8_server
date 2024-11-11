@@ -56,19 +56,34 @@ const borrowOverdueBook = async () => {
   });
 
   // filter out the books which are overdue
-  const overdueBooks = result.filter((book) => {
-    const borrowDate = new Date(book.borrowDate);
-    if (!book.returnDate) {
-      throw new AppError(400, "Return date is required");
-    }
-    const returnDate = new Date(book.returnDate);
-    const diffTime = Math.abs(returnDate.getTime() - borrowDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const finalOverdueBooks = result
+    .filter((book) => {
+      const borrowDate = new Date(book.borrowDate);
+      if (!book.returnDate) {
+        throw new AppError(400, "Return date is required");
+      }
+      const returnDate = new Date(book.returnDate);
+      const diffTime = Math.abs(returnDate.getTime() - borrowDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays > 14;
+    })
+    .map((book) => {
+      const borrowDate = new Date(book.borrowDate);
+      if (!book.returnDate) {
+        throw new AppError(400, "Return date is required");
+      }
+      const returnDate = new Date(book.returnDate);
+      const diffTime = Math.abs(returnDate.getTime() - borrowDate.getTime());
+      const overdueDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 14;
+      return {
+        borrowId: book.borrowId,
+        bookTitle: book.book.title,
+        borrowerName: book.member.name,
+        overdueDays: overdueDays,
+      };
+    });
 
-    return diffDays > 14;
-  });
-
-  return overdueBooks;
+  return finalOverdueBooks;
 };
 
 // export all functions from the service
