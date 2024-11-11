@@ -4,7 +4,7 @@ import config from "./config";
 
 async function main() {
   const server: Server = app.listen(config.port, () => {
-    console.log(`PH HEATH SERVER LISTENING ON PORT ${config.port} 👌`);
+    console.log(`BOOKKI LISTENING ON PORT ${config.port} 👌`);
   });
 }
 
